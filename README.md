@@ -1,14 +1,14 @@
-# scoop-bucket
+# scoop-ch3n4y
 
 Personal [Scoop](https://scoop.sh) bucket for software I use that is not available in the official buckets.
 
 ## Install the bucket
 
 ```powershell
-scoop bucket add bucket https://github.com/ch3n4y/scoop-bucket
+scoop bucket add ch3n4y https://github.com/ch3n4y/scoop-ch3n4y
 ```
 
-The bucket name is `bucket`, so a package from here is installed as `scoop install bucket/<app>`.
+The bucket name is `ch3n4y`, so a package from here is installed as `scoop install ch3n4y/<app>`.
 A plain `scoop install <app>` works too, as long as no other bucket has a package with the same name.
 
 ## Packages
@@ -18,7 +18,7 @@ A plain `scoop install <app>` works too, as long as no other bucket has a packag
 | `pail` | [DejavuMoe/Pail](https://github.com/DejavuMoe/Pail) | Desktop client for S3-compatible object storage (S3, R2, MinIO, Wasabi, VersityGW). Ships `pail-desktop` and the `pail` CLI. |
 
 ```powershell
-scoop install bucket/pail
+scoop install ch3n4y/pail
 ```
 
 Installs a Start menu shortcut `Pail` plus two shims:
