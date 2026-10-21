@@ -1,0 +1,44 @@
+{
+    "version": "0.4.5",
+    "description": "EasyTier desktop manager (EasyTier 桌面管理器).",
+    "homepage": "https://github.com/ch3n4y/easytier-manager",
+    "license": "Unknown",
+    "notes": [
+        "EasyTier Manager needs administrator rights: every launch triggers a UAC prompt.",
+        "Start it from the Start menu shortcut, or run 'sudo easytier-manager' from a shell.",
+        "Settings live in %APPDATA%\\com.ch3n4y.easytier-manager and are kept across 'scoop update'."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/ch3n4y/easytier-manager/releases/download/v0.4.5/EasyTier-Manager_0.4.5_x64-setup.exe",
+            "hash": "542b79fc7ea5db30b49f42b91713a7907234bdc4f85f40615f715f5af320222d"
+        }
+    },
+    "installer": {
+        "script": [
+            "# The NSIS setup is unpacked instead of executed: Scoop installs the app green,",
+            "# so no uninstall registry entry or installer bookkeeping is left behind.",
+            "# Tauri is a single self-contained binary, so the payload alone is enough.",
+            "$null = New-Item -Path \"$dir\" -ItemType Directory -Force",
+            "Expand-7zipArchive \"$(app_path_7zip)\" -Path \"$dir\" -DestinationPath \"$dir\" -Removal",
+            "# 7-Zip's NSIS extractor drops its own helper files beside the payload; drop them.",
+            "Get-ChildItem -Path \"$dir\" -Force | Where-Object { $_.Name -in @('$PLUGINSDIR', 'uninstall.exe') } | Remove-Item -Recurse -Force",
+            "if (!(Test-Path \"$dir\\easytier-manager.exe\")) { error 'easytier-manager.exe not found after extraction' }",
+            "Get-ChildItem -Path \"$dir\" -Filter '*.exe' -File | Unblock-File"
+        ]
+    },
+    "bin": "easytier-manager.exe",
+    "shortcuts": [
+        ["easytier-manager.exe", "EasyTier Manager"]
+    ],
+    "checkver": {
+        "github": "https://github.com/ch3n4y/easytier-manager"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/ch3n4y/easytier-manager/releases/download/v$version/EasyTier-Manager_$version_x64-setup.exe"
+            }
+        }
+    }
+}
