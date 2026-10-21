@@ -1,0 +1,50 @@
+{
+    "version": "0.2.0",
+    "description": "Desktop client for Amazon S3, Cloudflare R2, MinIO and other S3-compatible object storage.",
+    "homepage": "https://pail.download",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/DejavuMoe/Pail/releases/download/v0.2.0/Pail-v0.2.0-windows-amd64.zip",
+            "hash": "b72fc15c1d099c14d0e960795c4f0845f1a4f79dbaca29e63cf41ed41abe496d",
+            "extract_dir": "Pail-v0.2.0-windows-amd64"
+        },
+        "arm64": {
+            "url": "https://github.com/DejavuMoe/Pail/releases/download/v0.2.0/Pail-v0.2.0-windows-arm64.zip",
+            "hash": "22a1aa7cf77d272867ee6b0c598d8b3fd913e275366c6d8f98b8854557d0e2d6",
+            "extract_dir": "Pail-v0.2.0-windows-arm64"
+        }
+    },
+    "bin": [
+        ["pail-desktop-v0.2.0-windows-$architecture.exe", "pail-desktop"],
+        ["pail-v0.2.0-windows-$architecture.exe", "pail"]
+    ],
+    "shortcuts": [
+        ["pail-desktop-v0.2.0-windows-$architecture.exe", "Pail"]
+    ],
+    "checkver": {
+        "github": "https://github.com/DejavuMoe/Pail"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/DejavuMoe/Pail/releases/download/v$version/Pail-v$version-windows-amd64.zip",
+                "extract_dir": "Pail-v$version-windows-amd64"
+            },
+            "arm64": {
+                "url": "https://github.com/DejavuMoe/Pail/releases/download/v$version/Pail-v$version-windows-arm64.zip",
+                "extract_dir": "Pail-v$version-windows-arm64"
+            }
+        },
+        "hash": {
+            "url": "https://github.com/DejavuMoe/Pail/releases/download/v$version/SHA256SUMS"
+        },
+        "bin": [
+            ["pail-desktop-v$version-windows-$architecture.exe", "pail-desktop"],
+            ["pail-v$version-windows-$architecture.exe", "pail"]
+        ],
+        "shortcuts": [
+            ["pail-desktop-v$version-windows-$architecture.exe", "Pail"]
+        ]
+    }
+}

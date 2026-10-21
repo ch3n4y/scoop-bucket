@@ -1,0 +1,11 @@
+{
+    "$schema": "https://raw.githubusercontent.com/ScoopInstaller/Scoop/master/schema.json",
+    "config": {
+        "bucket": ".",
+        "private_hosts": [],
+        "show_update_log": true,
+        "autostash_on_conflict": true,
+        "default_architecture": "64bit",
+        "update_nightly": false
+    }
+}

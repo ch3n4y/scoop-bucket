@@ -1,0 +1,6 @@
+# Editor
+* text=auto eol=lf
+*.json text eol=lf
+
+# Scoop keeps the manifest tree flat under bucket/
+bucket/*.json -text
