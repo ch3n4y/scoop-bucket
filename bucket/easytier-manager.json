@@ -16,15 +16,15 @@
     },
     "installer": {
         "script": [
-            "# The NSIS setup is unpacked instead of executed: Scoop installs the app green,",
-            "# so no uninstall registry entry or installer bookkeeping is left behind.",
-            "# Tauri is a single self-contained binary, so the payload alone is enough.",
-            "$null = New-Item -Path \"$dir\" -ItemType Directory -Force",
-            "Expand-7zipArchive \"$(app_path_7zip)\" -Path \"$dir\" -DestinationPath \"$dir\" -Removal",
-            "# 7-Zip's NSIS extractor drops its own helper files beside the payload; drop them.",
-            "Get-ChildItem -Path \"$dir\" -Force | Where-Object { $_.Name -in @('$PLUGINSDIR', 'uninstall.exe') } | Remove-Item -Recurse -Force",
+            "# The NSIS setup is unpacked rather than executed, so Scoop installs the app green:",
+            "# no uninstall registry entry, no installer bookkeeping. Tauri is a single",
+            "# self-contained binary, so the payload alone is all that is needed.",
+            "$setup = Get-ChildItem -Path $dir -Filter '*-setup.exe' -File | Select-Object -First 1",
+            "Expand-7zipArchive -Path $setup.FullName -DestinationPath $dir -Removal",
+            "# The NSIS extractor leaves its own helpers and the uninstaller beside the payload.",
+            "Get-ChildItem -Path $dir -Force | Where-Object { $_.Name -in @('$PLUGINSDIR', 'uninstall.exe', '7zip.log') } | Remove-Item -Recurse -Force",
             "if (!(Test-Path \"$dir\\easytier-manager.exe\")) { error 'easytier-manager.exe not found after extraction' }",
-            "Get-ChildItem -Path \"$dir\" -Filter '*.exe' -File | Unblock-File"
+            "Get-ChildItem -Path $dir -Filter '*.exe' -File | Unblock-File"
         ]
     },
     "bin": "easytier-manager.exe",
