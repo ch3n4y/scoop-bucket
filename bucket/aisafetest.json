@@ -1,0 +1,41 @@
+{
+    "version": "2.6.48",
+    "description": "AISafeTest (AgSec) 智能体安全测评平台 desktop app.",
+    "homepage": "https://github.com/ch3n4y/AISafeTest",
+    "license": "Unknown",
+    "notes": [
+        "Releases are published on cnb.cool (ch3n4y/AiSafeTool-Releases), not on GitHub.",
+        "The app carries its own signed updater (AISafeTest.sig); that updater is independent of Scoop."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/releases/download/v2.6.48/AISafeTest-v2.6.48-windows-amd64.zip",
+            "hash": "263da1cb39c88bc80a0edbceb9a1f8aa23c7594a18b17b267929f99a4e6f039f"
+        },
+        "arm64": {
+            "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/releases/download/v2.6.48/AISafeTest-v2.6.48-windows-arm64.zip",
+            "hash": "189aef5fbd1b9030feb1f61aa009d672650e6e8541cf5f6d77ebc8c4f1a3f7a7"
+        }
+    },
+    "bin": "AISafeTest.exe",
+    "shortcuts": [
+        ["AISafeTest.exe", "AISafeTest"]
+    ],
+    "checkver": {
+        "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/releases",
+        "regex": "/releases/tag/v([\\d.]+)"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/releases/download/v$version/AISafeTest-v$version-windows-amd64.zip"
+            },
+            "arm64": {
+                "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/releases/download/v$version/AISafeTest-v$version-windows-arm64.zip"
+            }
+        },
+        "hash": {
+            "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/releases/download/v$version/SHA256SUMS"
+        }
+    }
+}
