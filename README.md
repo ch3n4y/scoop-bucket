@@ -17,6 +17,7 @@ A plain `scoop install <app>` works too, as long as no other bucket has a packag
 | --- | --- | --- |
 | `pail` | [DejavuMoe/Pail](https://github.com/DejavuMoe/Pail) | Desktop client for S3-compatible object storage (S3, R2, MinIO, Wasabi, VersityGW). Ships `pail-desktop` and the `pail` CLI. |
 | `easytier-manager` | [ch3n4y/easytier-manager](https://github.com/ch3n4y/easytier-manager) | Desktop manager for [EasyTier](https://github.com/EasyTier/EasyTier) mesh VPN. Windows x64 only. |
+| `aisafetest` | [ch3n4y/AISafeTest](https://github.com/ch3n4y/AISafeTest) | AgSec agent security evaluation platform. Releases come from cnb.cool, not GitHub. |
 
 ```powershell
 scoop install ch3n4y/pail
@@ -44,10 +45,27 @@ Launch it from the Start menu, or from a shell with `sudo easytier-manager`.
 Settings are stored in `%APPDATA%\com.ch3n4y.easytier-manager` and survive `scoop update`.
 The app has its own Tauri updater pointed at its GitHub releases, independent of Scoop.
 
+### aisafetest
+
+```powershell
+scoop install ch3n4y/aisafetest
+```
+
+**Releases live on cnb.cool, not GitHub.** The `AISafeTest` GitHub repo stops at v1.0.1, while the
+authoritative feed is the `ch3n4y/AiSafeTool-Releases` project on cnb.cool (currently v2.6.48).
+Each release ships per-platform zips plus a `SHA256SUMS` list; this manifest pulls the two
+Windows zips and verifies them against that list.
+
+`checkver` scrapes `/-/releases` for the newest `/releases/tag/v...` link rather than using the
+`github` helper, since these tags exist only on cnb.cool.
+
+The archive holds `AISafeTest.exe` plus `AISafeTest.sig`; the plain executable name is what `bin`
+and `shortcuts` reference. The app has its own signed updater, independent of Scoop.
+
 ## Notes
 
 - Upstream builds are unsigned. SmartScreen may warn on first launch; choose **More info → Run anyway**.
- - Executables inside the archives carry the version and architecture in their filename
+- Executables inside the archives carry the version and architecture in their filename
    (`pail-desktop-v0.2.0-windows-amd64.exe`). A `pre_install` step renames them to plain
    `pail-desktop.exe` / `pail.exe`, because Scoop resolves `bin` and `shortcuts` paths literally —
    it does not expand `$version` or `$architecture` there. The plain names keep working across
