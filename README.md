@@ -53,11 +53,20 @@ scoop install ch3n4y/aisafetest
 
 **Releases live on cnb.cool, not GitHub.** The `AISafeTest` GitHub repo stops at v1.0.1, while the
 authoritative feed is the `ch3n4y/AiSafeTool-Releases` project on cnb.cool (currently v2.6.48).
-Each release ships per-platform zips plus a `SHA256SUMS` list; this manifest pulls the two
-Windows zips and verifies them against that list.
+Each release ships per-platform zips, a `SHA256SUMS` list and an `aisafetest-latest.json` feed. This
+manifest reads that feed as the single source of truth for both the version and the hashes:
 
-`checkver` scrapes `/-/releases` for the newest `/releases/tag/v...` link rather than using the
-`github` helper, since these tags exist only on cnb.cool.
+```json
+"checkver": {
+    "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/git/raw/main/aisafetest-latest.json",
+    "jsonpath": "$.tag_name",
+    "regex": "v([\\d.]+)"
+}
+```
+
+`autoupdate` picks each architecture's hash from `$.assets[?(@.name == '...')].sha256` in the same
+feed, matching on the full asset name. The `github` checkver helper is unusable here because these
+tags exist only on cnb.cool.
 
 The archive holds `AISafeTest.exe` plus `AISafeTest.sig`; the plain executable name is what `bin`
 and `shortcuts` reference. The app has its own signed updater, independent of Scoop.
