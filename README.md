@@ -16,6 +16,7 @@ A plain `scoop install <app>` works too, as long as no other bucket has a packag
 | Package | Upstream | Description |
 | --- | --- | --- |
 | `pail` | [DejavuMoe/Pail](https://github.com/DejavuMoe/Pail) | Desktop client for S3-compatible object storage (S3, R2, MinIO, Wasabi, VersityGW). Ships `pail-desktop` and the `pail` CLI. |
+| `easytier-manager` | [ch3n4y/easytier-manager](https://github.com/ch3n4y/easytier-manager) | Desktop manager for [EasyTier](https://github.com/EasyTier/EasyTier) mesh VPN. Windows x64 only. |
 
 ```powershell
 scoop install ch3n4y/pail
@@ -25,6 +26,23 @@ Installs a Start menu shortcut `Pail` plus two shims:
 
 - `pail-desktop` — the desktop app
 - `pail` — the command-line tool (shares the desktop app's accounts and sync jobs)
+
+### easytier-manager
+
+```powershell
+scoop install ch3n4y/easytier-manager
+```
+
+The upstream Windows build is an NSIS installer whose payload is a single self-contained
+Tauri binary. This manifest unpacks it instead of running it, so the app installs green —
+no uninstall registry entry and nothing for the installer to leave behind.
+
+The binary declares `requestedExecutionLevel level="requireAdministrator"`, so **every launch
+raises a UAC prompt**; EasyTier needs admin rights to manage its virtual adapter and routes.
+Launch it from the Start menu, or from a shell with `sudo easytier-manager`.
+
+Settings are stored in `%APPDATA%\com.ch3n4y.easytier-manager` and survive `scoop update`.
+The app has its own Tauri updater pointed at its GitHub releases, independent of Scoop.
 
 ## Notes
 
