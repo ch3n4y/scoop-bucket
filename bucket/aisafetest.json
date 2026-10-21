@@ -22,20 +22,26 @@
         ["AISafeTest.exe", "AISafeTest"]
     ],
     "checkver": {
-        "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/releases",
-        "regex": "/releases/tag/v([\\d.]+)"
+        "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/git/raw/main/aisafetest-latest.json",
+        "jsonpath": "$.tag_name",
+        "regex": "v([\\d.]+)"
     },
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/releases/download/v$version/AISafeTest-v$version-windows-amd64.zip"
+                "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/releases/download/v$version/AISafeTest-v$version-windows-amd64.zip",
+                "hash": {
+                    "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/git/raw/main/aisafetest-latest.json",
+                    "jsonpath": "$.assets[?(@.name == 'AISafeTest-v$version-windows-amd64.zip')].sha256"
+                }
             },
             "arm64": {
-                "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/releases/download/v$version/AISafeTest-v$version-windows-arm64.zip"
+                "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/releases/download/v$version/AISafeTest-v$version-windows-arm64.zip",
+                "hash": {
+                    "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/git/raw/main/aisafetest-latest.json",
+                    "jsonpath": "$.assets[?(@.name == 'AISafeTest-v$version-windows-arm64.zip')].sha256"
+                }
             }
-        },
-        "hash": {
-            "url": "https://cnb.cool/ch3n4y/AiSafeTool-Releases/-/releases/download/v$version/SHA256SUMS"
         }
     }
 }
