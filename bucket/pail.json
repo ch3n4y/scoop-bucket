@@ -15,12 +15,28 @@
             "extract_dir": "Pail-v0.2.0-windows-arm64"
         }
     },
+    "pre_install": [
+        "$versioned = Get-ChildItem -Path \"$dir\" -Filter '*-v*-windows-*.exe' -File",
+        "$arch = if ($architecture -eq 'arm64') { 'arm64' } else { 'amd64' }",
+        "foreach ($file in $versioned) {",
+        "    # Upstream names executables 'pail[-desktop]-v<version>-windows-<arch>.exe'.",
+        "    # Drop the version and the architecture so 'bin' and 'shortcuts' can use plain names",
+        "    # that survive version bumps without being rewritten by autoupdate.",
+        "    if ($file.Name -like \"*windows-$arch.exe\") {",
+        "        $stem = $file.Name -replace '-v[0-9].*$', ''",
+        "        Rename-Item -Path $file.FullName -NewName \"$stem.exe\"",
+        "    } else {",
+        "        Remove-Item -Path $file.FullName -Force",
+        "    }",
+        "}",
+        "if (!(Test-Path \"$dir\\pail-desktop.exe\")) { error 'pail-desktop.exe not found after extraction' }"
+    ],
     "bin": [
-        ["pail-desktop-v0.2.0-windows-$architecture.exe", "pail-desktop"],
-        ["pail-v0.2.0-windows-$architecture.exe", "pail"]
+        ["pail-desktop.exe", "pail-desktop"],
+        "pail.exe"
     ],
     "shortcuts": [
-        ["pail-desktop-v0.2.0-windows-$architecture.exe", "Pail"]
+        ["pail-desktop.exe", "Pail"]
     ],
     "checkver": {
         "github": "https://github.com/DejavuMoe/Pail"
@@ -38,13 +54,6 @@
         },
         "hash": {
             "url": "https://github.com/DejavuMoe/Pail/releases/download/v$version/SHA256SUMS"
-        },
-        "bin": [
-            ["pail-desktop-v$version-windows-$architecture.exe", "pail-desktop"],
-            ["pail-v$version-windows-$architecture.exe", "pail"]
-        ],
-        "shortcuts": [
-            ["pail-desktop-v$version-windows-$architecture.exe", "Pail"]
-        ]
+        }
     }
 }
