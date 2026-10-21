@@ -18,6 +18,7 @@ A plain `scoop install <app>` works too, as long as no other bucket has a packag
 | `pail` | [DejavuMoe/Pail](https://github.com/DejavuMoe/Pail) | Desktop client for S3-compatible object storage (S3, R2, MinIO, Wasabi, VersityGW). Ships `pail-desktop` and the `pail` CLI. |
 | `easytier-manager` | [ch3n4y/easytier-manager](https://github.com/ch3n4y/easytier-manager) | Desktop manager for [EasyTier](https://github.com/EasyTier/EasyTier) mesh VPN. Windows x64 only. |
 | `aisafetest` | [ch3n4y/AISafeTest](https://github.com/ch3n4y/AISafeTest) | AgSec agent security evaluation platform. Releases come from cnb.cool, not GitHub. |
+| `wifit3` | [derv82/wifit3](https://github.com/derv82/wifit3) | USB Wi-Fi auditor (Wifite, but USB-only and cross-platform). Windows x64 only. |
 
 ```powershell
 scoop install ch3n4y/pail
@@ -70,6 +71,24 @@ tags exist only on cnb.cool.
 
 The archive holds `AISafeTest.exe` plus `AISafeTest.sig`; the plain executable name is what `bin`
 and `shortcuts` reference. The app has its own signed updater, independent of Scoop.
+
+### wifit3
+
+```powershell
+scoop install ch3n4y/wifit3
+```
+
+Upstream ships a single self-contained PyInstaller executable; the manifest renames
+`wifit3-windows-x64.exe` to `wifit3.exe` via the `#/` URL fragment so `bin` stays stable across
+versions. Only an x64 Windows build exists — there is no arm64 release.
+
+wifit3 bypasses the Windows Wi-Fi stack entirely: it carries Python ports of the Linux wireless
+drivers and drives supported USB adapters directly. **On first use it asks for UAC once** to bind
+the adapter to WinUSB, which detaches the normal driver. Use *Remove Driver* in the app (also UAC)
+to undo that binding. This is upstream behaviour, not something Scoop adds.
+
+`requestedExecutionLevel` is `asInvoker`, so the app itself launches without elevation; only the
+driver binding step elevates. Startup can be checked headlessly with `wifit3 --smoke`.
 
 ## Notes
 
