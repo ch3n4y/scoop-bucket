@@ -1,0 +1,29 @@
+{
+    "version": "0.5.2",
+    "description": "Standalone USB Wi-Fi auditor for Windows, Linux and macOS (Wifite, but USB-only and cross-platform).",
+    "homepage": "https://github.com/derv82/wifit3",
+    "license": "GPL-2.0-only",
+    "notes": [
+        "Windows x64 only upstream: there is no arm64 build.",
+        "wifit3 ships its own Python ports of the Linux wireless drivers and talks to the adapter over USB, bypassing the Windows NDIS/Wi-Fi stack.",
+        "On first use it asks for UAC once to bind the adapter to WinUSB. Use 'Remove Driver' in the app (also UAC) to undo it.",
+        "Works with specific USB adapters only; see the upstream README for the supported chipset list."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/derv82/wifit3/releases/download/v0.5.2/wifit3-windows-x64.exe#/wifit3.exe",
+            "hash": "718c760bce72dd00b8b8d3fb5b88e7e21a0f7e3c0af8d4e9b9a8c57f4116470e"
+        }
+    },
+    "bin": "wifit3.exe",
+    "checkver": {
+        "github": "https://github.com/derv82/wifit3"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/derv82/wifit3/releases/download/v$version/wifit3-windows-x64.exe#/wifit3.exe"
+            }
+        }
+    }
+}
